@@ -6,6 +6,7 @@ import {
   CreatedAt,
   UpdatedAt,
   DeletedAt,
+  BelongsToMany,
 } from 'sequelize-typescript';
 
 /**
@@ -103,5 +104,10 @@ export class Product extends Model {
     field: 'deleted_at',
   })
   declare deletedAt: Date;
+
+  // Relationships (commented out to avoid circular dependency issues during initial setup)
+  // Uncomment after Orders module is fully configured
+  // @BelongsToMany(() => Order, () => OrderItem)
+  // orders: Order[];
 }
 
