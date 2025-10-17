@@ -1,0 +1,90 @@
+# Production Docker Compose Configuration
+# This file shows how to run the backend in production with Docker
+
+version: '3.8'
+
+services:
+  # Backend API
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: zoppy-backend-prod
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      # Application
+      NODE_ENV: production
+      PORT: 3000
+      API_PREFIX: api
+      
+      # Database (use external DB in real production)
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USERNAME: zoppy_user
+      DB_PASSWORD: ${DB_PASSWORD:-zoppy_prod_password}
+      DB_DATABASE: zoppy_db
+      DB_SYNC: "false"  # IMPORTANT: Never auto-sync in production
+      DB_LOGGING: "false"
+      
+      # CORS
+      CORS_ORIGIN: ${CORS_ORIGIN:-https://your-frontend-domain.com}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - zoppy-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: zoppy-mysql-prod
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_prod_password}
+      MYSQL_DATABASE: zoppy_db
+      MYSQL_USER: zoppy_user
+      MYSQL_PASSWORD: ${DB_PASSWORD:-zoppy_prod_password}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - zoppy-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-root_prod_password}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Optional: Nginx reverse proxy
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: zoppy-nginx
+  #   restart: unless-stopped
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf:ro
+  #     - ./ssl:/etc/nginx/ssl:ro
+  #   depends_on:
+  #     - backend
+  #   networks:
+  #     - zoppy-network
+
+networks:
+  zoppy-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+    driver: local
+
