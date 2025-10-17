@@ -6,6 +6,7 @@ import { ProductFormComponent } from '../../../organisms/product-form/product-fo
 import { SpinnerComponent } from '../../../atoms/spinner/spinner.component';
 import { Product, CreateProductDto, UpdateProductDto } from '../models/product.model';
 import { ProductService } from '../services/product.service';
+import { ToastService } from '../../../core/services/toast.service';
 
 /**
  * ProductFormPage - Atomic Design Level 5 (Page/Smart Component)
@@ -72,6 +73,7 @@ export class ProductFormPageComponent implements OnInit, OnDestroy {
   private productService = inject(ProductService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private toastService = inject(ToastService);
   
   editMode = false;
   productId?: number;
@@ -130,11 +132,16 @@ export class ProductFormPageComponent implements OnInit, OnDestroy {
         .updateProduct(this.productId, productData as UpdateProductDto)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
-          next: () => {
+          next: (response) => {
+            this.toastService.updateSuccess('Product');
             this.router.navigate(['/products']);
           },
           error: (error) => {
             console.error('Failed to update product:', error);
+            this.toastService.error(
+              'Failed to update product. Please check your input and try again.',
+              'Update Failed'
+            );
           },
         });
     } else {
@@ -143,11 +150,16 @@ export class ProductFormPageComponent implements OnInit, OnDestroy {
         .createProduct(productData as CreateProductDto)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
-          next: () => {
+          next: (response) => {
+            this.toastService.createSuccess('Product');
             this.router.navigate(['/products']);
           },
           error: (error) => {
             console.error('Failed to create product:', error);
+            this.toastService.error(
+              'Failed to create product. Please check your input and try again.',
+              'Create Failed'
+            );
           },
         });
     }
