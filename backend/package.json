@@ -23,7 +23,9 @@
     "docker:run": "docker run -p 3000:3000 --env-file .env zoppy-backend:latest",
     "docker:prod": "docker-compose -f docker-compose.prod.yml up -d",
     "docker:prod:down": "docker-compose -f docker-compose.prod.yml down",
-    "docker:prod:logs": "docker-compose -f docker-compose.prod.yml logs -f backend"
+    "docker:prod:logs": "docker-compose -f docker-compose.prod.yml logs -f backend",
+    "seed": "ts-node src/scripts/seed.ts",
+    "seed:prod": "node dist/scripts/seed.js"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -35,7 +37,8 @@
     "@nestjs/swagger": "^11.2.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
-    "mysql2": "^3.15.2",
+    "pg": "^8.11.3",
+    "pg-hstore": "^2.3.4",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "sequelize": "^6.37.7",

@@ -19,20 +19,13 @@ services:
       PORT: 3000
       API_PREFIX: api
       
-      # Database (use external DB in real production)
-      DB_HOST: mysql
-      DB_PORT: 3306
-      DB_USERNAME: zoppy_user
-      DB_PASSWORD: ${DB_PASSWORD:-zoppy_prod_password}
-      DB_DATABASE: zoppy_db
+      # Database - Use Railway Postgres DATABASE_URL
+      DATABASE_URL: ${DATABASE_URL}
       DB_SYNC: "false"  # IMPORTANT: Never auto-sync in production
-      DB_LOGGING: "false"
+      LOG_LEVEL: "info"
       
       # CORS
       CORS_ORIGIN: ${CORS_ORIGIN:-https://your-frontend-domain.com}
-    depends_on:
-      mysql:
-        condition: service_healthy
     networks:
       - zoppy-network
     healthcheck:
@@ -42,27 +35,8 @@ services:
       retries: 3
       start_period: 40s
 
-  # MySQL Database
-  mysql:
-    image: mysql:8.0
-    container_name: zoppy-mysql-prod
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_prod_password}
-      MYSQL_DATABASE: zoppy_db
-      MYSQL_USER: zoppy_user
-      MYSQL_PASSWORD: ${DB_PASSWORD:-zoppy_prod_password}
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql-data:/var/lib/mysql
-    networks:
-      - zoppy-network
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-root_prod_password}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+  # Note: Using external Railway Postgres database
+  # No local database container needed
 
   # Optional: Nginx reverse proxy
   # nginx:
@@ -84,7 +58,5 @@ networks:
   zoppy-network:
     driver: bridge
 
-volumes:
-  mysql-data:
-    driver: local
+# No volumes needed - using external Railway Postgres
 
