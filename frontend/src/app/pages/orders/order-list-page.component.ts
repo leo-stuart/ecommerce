@@ -11,15 +11,6 @@ import { OrderService } from './services/order.service';
 import { PaginationMeta } from '../../core/models/api-response.model';
 import { ToastService } from '../../core/services/toast.service';
 
-/**
- * Order List Page - Atomic Design Level 5 (Page/Smart Component)
- * Displays list of orders with filtering and pagination
- * 
- * Demonstrates:
- * - Second CRUD entity implementation
- * - Relationship with Products
- * - Order management workflow
- */
 @Component({
   selector: 'app-order-list-page',
   standalone: true,
@@ -32,8 +23,8 @@ import { ToastService } from '../../core/services/toast.service';
   ],
   template: `
     <app-list-layout
-      [title]="'Orders'"
-      [subtitle]="'Manage customer orders'"
+      [title]="'Pedidos'"
+      [subtitle]="'Gerencie pedidos de clientes'"
       [showFilters]="true"
       [showPagination]="true">
       
@@ -42,14 +33,14 @@ import { ToastService } from '../../core/services/toast.service';
         <app-button
           variant="primary"
           (clicked)="onCreateOrder()">
-          <span class="mr-2">+</span> New Order
+          <span class="mr-2">+</span> Novo Pedido
         </app-button>
       </div>
 
       <!-- Filters Slot -->
       <div slot="filters">
         <app-search-bar
-          placeholder="Search by customer name or email..."
+          placeholder="Buscar por nome ou email do cliente..."
           (search)="onSearch($event)" />
         
         <!-- Status Filter -->
@@ -76,14 +67,14 @@ import { ToastService } from '../../core/services/toast.service';
                 d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" 
                 clip-rule="evenodd" />
             </svg>
-            <span class="font-semibold mr-2">Error:</span>
+            <span class="font-semibold mr-2">Erro:</span>
             <span>{{ error }}</span>
           </div>
         </div>
 
         <!-- Loading State -->
         <div *ngIf="loading$ | async" class="p-8">
-          <app-spinner message="Loading orders..." />
+          <app-spinner message="Carregando pedidos..." />
         </div>
 
         <!-- Orders Table -->
@@ -92,25 +83,25 @@ import { ToastService } from '../../core/services/toast.service';
             <thead class="bg-gray-50">
               <tr>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Order ID
+                  ID do Pedido
                 </th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Customer
+                  Cliente
                 </th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Status
                 </th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Items
+                  Itens
                 </th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Total
                 </th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Date
+                  Data
                 </th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
+                  Ações
                 </th>
               </tr>
             </thead>
@@ -129,10 +120,10 @@ import { ToastService } from '../../core/services/toast.service';
                   </span>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {{ order.itemCount }} item(s)
+                  {{ order.itemCount }} item(ns)
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  ${{ order.totalAmount.toFixed(2) }}
+                  R$ {{ order.totalAmount.toFixed(2) }}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {{ formatDate(order.createdAt) }}
@@ -141,13 +132,13 @@ import { ToastService } from '../../core/services/toast.service';
                   <button
                     (click)="onViewOrder(order)"
                     class="text-blue-600 hover:text-blue-900 mr-3">
-                    View
+                    Ver
                   </button>
                   <button
                     *ngIf="order.status !== 'cancelled' && order.status !== 'completed'"
                     (click)="onCancelOrder(order)"
                     class="text-red-600 hover:text-red-900">
-                    Cancel
+                    Cancelar
                   </button>
                 </td>
               </tr>
@@ -162,9 +153,9 @@ import { ToastService } from '../../core/services/toast.service';
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                 d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
-            <h3 class="mt-2 text-sm font-medium text-gray-900">No orders found</h3>
+            <h3 class="mt-2 text-sm font-medium text-gray-900">Nenhum pedido encontrado</h3>
             <p class="mt-1 text-sm text-gray-500">
-              Get started by creating a new order
+              Comece criando um novo pedido
             </p>
           </div>
         </div>
@@ -178,13 +169,13 @@ import { ToastService } from '../../core/services/toast.service';
         
         <!-- Results Info -->
         <div class="text-sm text-gray-700">
-          Showing 
+          Mostrando 
           <span class="font-medium">{{ ((paginationMeta.page - 1) * paginationMeta.limit) + 1 }}</span>
-          to 
+          até 
           <span class="font-medium">{{ Math.min(paginationMeta.page * paginationMeta.limit, paginationMeta.total) }}</span>
-          of 
+          de 
           <span class="font-medium">{{ paginationMeta.total }}</span>
-          orders
+          pedidos
         </div>
 
         <!-- Pagination Controls -->
@@ -194,11 +185,11 @@ import { ToastService } from '../../core/services/toast.service';
             size="small"
             [disabled]="!paginationMeta.hasPreviousPage"
             (clicked)="onPreviousPage()">
-            Previous
+            Anterior
           </app-button>
 
           <div class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg">
-            Page {{ paginationMeta.page }} of {{ paginationMeta.totalPages }}
+            Página {{ paginationMeta.page }} de {{ paginationMeta.totalPages }}
           </div>
 
           <app-button
@@ -206,7 +197,7 @@ import { ToastService } from '../../core/services/toast.service';
             size="small"
             [disabled]="!paginationMeta.hasNextPage"
             (clicked)="onNextPage()">
-            Next
+            Próximo
           </app-button>
         </div>
       </div>
@@ -231,11 +222,11 @@ export class OrderListPageComponent implements OnInit, OnDestroy {
   };
 
   statuses = [
-    { value: '', label: 'All' },
-    { value: 'pending', label: 'Pending' },
-    { value: 'processing', label: 'Processing' },
-    { value: 'completed', label: 'Completed' },
-    { value: 'cancelled', label: 'Cancelled' },
+    { value: '', label: 'Todos' },
+    { value: 'pending', label: 'Pendente' },
+    { value: 'processing', label: 'Processando' },
+    { value: 'completed', label: 'Concluído' },
+    { value: 'cancelled', label: 'Cancelado' },
   ];
 
   // Expose Math for template
@@ -337,7 +328,7 @@ export class OrderListPageComponent implements OnInit, OnDestroy {
 
   getStatusBadgeClass(status: string): string {
     const baseClasses = 'px-2 inline-flex text-xs leading-5 font-semibold rounded-full';
-    const statusClasses = {
+    const statusClasses: { [key: string]: string } = {
       pending: 'bg-yellow-100 text-yellow-800',
       processing: 'bg-blue-100 text-blue-800',
       completed: 'bg-green-100 text-green-800',

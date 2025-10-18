@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject, tap, catchError, of } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { ApiResponse } from '../../../core/models/api-response.model';
+import { ApiResponse, PaginatedApiResponse } from '../../../core/models/api-response.model';
 import { Order, OrderDetails, CreateOrderDto, UpdateOrderDto, OrderFilter } from '../models/order.model';
 
 /**
@@ -30,7 +30,7 @@ export class OrderService {
   /**
    * Get all orders with filters
    */
-  getOrders(filter: OrderFilter = {}): Observable<ApiResponse<Order[]>> {
+  getOrders(filter: OrderFilter = {}): Observable<PaginatedApiResponse<Order>> {
     this.loadingSubject.next(true);
     this.errorSubject.next(null);
 
@@ -42,7 +42,7 @@ export class OrderService {
     if (filter.fromDate) params = params.set('fromDate', filter.fromDate);
     if (filter.toDate) params = params.set('toDate', filter.toDate);
 
-    return this.http.get<ApiResponse<Order[]>>(this.apiUrl, { params }).pipe(
+    return this.http.get<PaginatedApiResponse<Order>>(this.apiUrl, { params }).pipe(
       tap((response) => {
         this.ordersSubject.next(response.data);
         this.loadingSubject.next(false);
@@ -50,7 +50,11 @@ export class OrderService {
       catchError((error) => {
         this.errorSubject.next(error.message || 'Failed to fetch orders');
         this.loadingSubject.next(false);
-        return of({ data: [], success: false } as ApiResponse<Order[]>);
+        return of({ 
+          data: [], 
+          success: false, 
+          meta: { page: 1, limit: 10, total: 0, totalPages: 0, hasNextPage: false, hasPreviousPage: false }
+        } as PaginatedApiResponse<Order>);
       }),
     );
   }

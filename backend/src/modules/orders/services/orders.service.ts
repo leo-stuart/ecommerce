@@ -68,6 +68,9 @@ export class OrdersService {
 
     for (const item of createOrderDto.items) {
       const product = products.find((p) => p.id === item.productId);
+      if (!product) {
+        throw new NotFoundException(`Product with ID ${item.productId} not found`);
+      }
       const subtotal = Number(product.price) * item.quantity;
       totalAmount += subtotal;
 
@@ -86,7 +89,7 @@ export class OrdersService {
       status: 'pending',
       totalAmount,
       notes: createOrderDto.notes,
-    });
+    } as any);
 
     // Create order items
     const orderItems = await Promise.all(
@@ -101,6 +104,9 @@ export class OrdersService {
     // Update product stock
     for (const item of createOrderDto.items) {
       const product = products.find((p) => p.id === item.productId);
+      if (!product) {
+        throw new NotFoundException(`Product with ID ${item.productId} not found`);
+      }
       product.stock -= item.quantity;
       await product.save();
     }
@@ -287,12 +293,17 @@ export class OrdersService {
    * Get order statistics
    */
   async getStatistics(): Promise<any> {
+    const sequelize = this.orderModel.sequelize;
+    if (!sequelize) {
+      throw new Error('Sequelize instance not available');
+    }
+
     const stats = await this.orderModel.findAll({
       where: { isActive: true },
       attributes: [
         'status',
-        [this.orderModel.sequelize.fn('COUNT', this.orderModel.sequelize.col('id')), 'count'],
-        [this.orderModel.sequelize.fn('SUM', this.orderModel.sequelize.col('total_amount')), 'totalRevenue'],
+        [sequelize.fn('COUNT', sequelize.col('id')), 'count'],
+        [sequelize.fn('SUM', sequelize.col('total_amount')), 'totalRevenue'],
       ],
       group: ['status'],
       raw: true,

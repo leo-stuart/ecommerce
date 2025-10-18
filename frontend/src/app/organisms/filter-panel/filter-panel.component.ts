@@ -2,22 +2,8 @@ import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from '../../atoms/button/button.component';
-import { InputComponent } from '../../atoms/input/input.component';
 import { LabelComponent } from '../../atoms/label/label.component';
 
-/**
- * Filter Panel Organism - Atomic Design Level 3: ORGANISM
- * 
- * Purpose: Complex filter panel for product filtering
- * Contains: Multiple filter controls (category, price range, stock status)
- * Combines: Button atoms, Input atoms, Label atoms
- * 
- * Business Logic: Component-level (filter state management)
- * Does NOT contain: HTTP calls (parent page handles that)
- * 
- * Size: < 300 lines (complex component)
- * Reusability: Medium (specific to product filtering)
- */
 export interface ProductFilters {
   category?: string;
   minPrice?: number;
@@ -32,41 +18,37 @@ export interface ProductFilters {
     CommonModule,
     FormsModule,
     ButtonComponent,
-    InputComponent,
     LabelComponent,
   ],
   template: `
     <div class="filter-panel">
-      <!-- Header -->
-      <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-200">
-        <h3 class="text-lg font-semibold text-gray-900 flex items-center gap-2">
-          <!-- Filter Icon -->
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-              d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-          </svg>
-          Filters
+      <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
+        <h3 class="text-lg font-semibold text-gray-900 flex items-center gap-3">
+          <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+            </svg>
+          </div>
+          <span>Filtros</span>
         </h3>
 
-        <!-- Active Filters Count Badge -->
         <span 
           *ngIf="activeFiltersCount > 0"
-          class="inline-flex items-center justify-center px-2 py-1 text-xs font-semibold leading-none text-blue-600 bg-blue-100 rounded-full">
-          {{ activeFiltersCount }} active
+          class="inline-flex items-center justify-center px-3 py-1 text-xs font-semibold leading-none text-white bg-gradient-to-r from-blue-500 to-purple-600 rounded-full shadow-sm">
+          {{ activeFiltersCount }} ativo
         </span>
       </div>
 
-      <!-- Filter Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <!-- Category Filter -->
         <div class="filter-group">
-          <app-label [for]="'category'" [text]="'Category'"></app-label>
+          <app-label [htmlFor]="'category'">Categoria</app-label>
           <select
             id="category"
             [(ngModel)]="filters.category"
             (change)="onFilterChange()"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-3 py-2 border">
-            <option [value]="''">All Categories</option>
+            class="mt-2 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-3 border transition-all duration-200 hover:border-gray-400">
+            <option [value]="''">Todas as Categorias</option>
             <option 
               *ngFor="let cat of categories" 
               [value]="cat">
@@ -75,9 +57,8 @@ export interface ProductFilters {
           </select>
         </div>
 
-        <!-- Min Price Filter -->
         <div class="filter-group">
-          <app-label [for]="'minPrice'" [text]="'Min Price ($)'"></app-label>
+          <app-label [htmlFor]="'minPrice'">Preço Mínimo (R$)</app-label>
           <input
             id="minPrice"
             type="number"
@@ -86,12 +67,11 @@ export interface ProductFilters {
             placeholder="0"
             min="0"
             step="0.01"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-3 py-2 border" />
+            class="mt-2 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-3 border transition-all duration-200 hover:border-gray-400" />
         </div>
 
-        <!-- Max Price Filter -->
         <div class="filter-group">
-          <app-label [for]="'maxPrice'" [text]="'Max Price ($)'"></app-label>
+          <app-label [htmlFor]="'maxPrice'">Preço Máximo (R$)</app-label>
           <input
             id="maxPrice"
             type="number"
@@ -100,61 +80,54 @@ export interface ProductFilters {
             placeholder="∞"
             min="0"
             step="0.01"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-3 py-2 border" />
+            class="mt-2 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-3 border transition-all duration-200 hover:border-gray-400" />
         </div>
 
-        <!-- Stock Status Filter -->
         <div class="filter-group">
-          <app-label [for]="'stockStatus'" [text]="'Stock Status'"></app-label>
+          <app-label [htmlFor]="'stockStatus'">Status do Estoque</app-label>
           <select
             id="stockStatus"
             [(ngModel)]="stockStatusValue"
             (change)="onStockStatusChange()"
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-3 py-2 border">
-            <option value="all">All Products</option>
-            <option value="inStock">In Stock Only</option>
-            <option value="outOfStock">Out of Stock</option>
+            class="mt-2 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-3 border transition-all duration-200 hover:border-gray-400">
+            <option value="all">Todos os Produtos</option>
+            <option value="inStock">Apenas em Estoque</option>
+            <option value="outOfStock">Sem Estoque</option>
           </select>
         </div>
       </div>
 
-      <!-- Filter Actions -->
       <div class="flex items-center justify-end gap-3 mt-6 pt-4 border-t border-gray-200">
-        <!-- Clear Filters Button -->
         <app-button
           *ngIf="activeFiltersCount > 0"
           [type]="'button'"
           [variant]="'secondary'"
-          [size]="'sm'"
+          [size]="'small'"
           (click)="onClearFilters()">
-          <!-- Clear Icon -->
           <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
               d="M6 18L18 6M6 6l12 12" />
           </svg>
-          Clear Filters
+          Limpar Filtros
         </app-button>
 
-        <!-- Apply Filters Button (Mobile) -->
         <app-button
           [type]="'button'"
           [variant]="'primary'"
-          [size]="'sm'"
+          [size]="'small'"
           [class]="'sm:hidden'"
           (click)="onApplyFilters()">
-          Apply Filters
+          Aplicar Filtros
         </app-button>
       </div>
 
-      <!-- Active Filters Summary -->
       <div *ngIf="activeFiltersCount > 0" class="mt-4 pt-4 border-t border-gray-200">
-        <p class="text-sm text-gray-600 mb-2">Active filters:</p>
+        <p class="text-sm text-gray-600 mb-2">Filtros ativos:</p>
         <div class="flex flex-wrap gap-2">
-          <!-- Category Badge -->
           <span 
             *ngIf="filters.category"
             class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-blue-50 text-blue-700">
-            Category: {{ filters.category }}
+            Categoria: {{ filters.category }}
             <button 
               type="button"
               (click)="removeFilter('category')"
@@ -167,11 +140,10 @@ export interface ProductFilters {
             </button>
           </span>
 
-          <!-- Price Range Badge -->
           <span 
             *ngIf="filters.minPrice !== undefined || filters.maxPrice !== undefined"
             class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-green-50 text-green-700">
-            Price: {{ formatPriceRange() }}
+            Preço: {{ formatPriceRange() }}
             <button 
               type="button"
               (click)="removeFilter('price')"
@@ -184,11 +156,10 @@ export interface ProductFilters {
             </button>
           </span>
 
-          <!-- Stock Status Badge -->
           <span 
             *ngIf="filters.inStock !== undefined"
             class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-purple-50 text-purple-700">
-            {{ filters.inStock ? 'In Stock' : 'Out of Stock' }}
+            {{ filters.inStock ? 'Em Estoque' : 'Sem Estoque' }}
             <button 
               type="button"
               (click)="removeFilter('stock')"
@@ -264,8 +235,14 @@ export class FilterPanelComponent implements OnInit {
   private filterChangeTimer: any;
 
   ngOnInit(): void {
-    // Initialize filters from input
-    this.filters = { ...this.initialFilters };
+    // Initialize filters from input with defaults
+    this.filters = { 
+      category: '',
+      minPrice: undefined,
+      maxPrice: undefined,
+      inStock: undefined,
+      ...this.initialFilters 
+    };
     
     // Set stock status dropdown value
     if (this.filters.inStock === true) {
@@ -386,10 +363,10 @@ export class FilterPanelComponent implements OnInit {
     if (this.filters.category) {
       clean.category = this.filters.category;
     }
-    if (this.filters.minPrice !== undefined && this.filters.minPrice !== null && this.filters.minPrice !== '') {
+    if (this.filters.minPrice !== undefined && this.filters.minPrice !== null) {
       clean.minPrice = Number(this.filters.minPrice);
     }
-    if (this.filters.maxPrice !== undefined && this.filters.maxPrice !== null && this.filters.maxPrice !== '') {
+    if (this.filters.maxPrice !== undefined && this.filters.maxPrice !== null) {
       clean.maxPrice = Number(this.filters.maxPrice);
     }
     if (this.filters.inStock !== undefined) {

@@ -8,7 +8,7 @@
 [![TailwindCSS](https://img.shields.io/badge/Tailwind-3.4-38bdf8?logo=tailwindcss)](https://tailwindcss.com/)
 [![Cobertura de Testes](https://img.shields.io/badge/Cobertura-73.84%25-brightgreen)](https://github.com)
 
-Sistema profissional de gerenciamento de produtos e pedidos demonstrando arquitetura limpa, melhores práticas e padrões modernos de desenvolvimento web.
+Aplicação CRUD full-stack demonstrando arquitetura limpa, melhores práticas e padrões modernos de desenvolvimento web.
 
 ---
 

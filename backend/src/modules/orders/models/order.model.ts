@@ -29,7 +29,7 @@ export class Order extends Model<Order> {
     primaryKey: true,
     autoIncrement: true,
   })
-  id: number;
+  declare id: number;
 
   @Column({
     type: DataType.STRING(100),
@@ -84,14 +84,14 @@ export class Order extends Model<Order> {
     type: DataType.DATE,
     allowNull: false,
   })
-  createdAt: Date;
+  declare createdAt: Date;
 
   @UpdatedAt
   @Column({
     type: DataType.DATE,
     allowNull: false,
   })
-  updatedAt: Date;
+  declare updatedAt: Date;
 
   // Relationships
   @BelongsToMany(() => Product, () => OrderItem)

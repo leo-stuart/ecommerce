@@ -13,19 +13,6 @@ import { ProductService } from '../services/product.service';
 import { PaginationMeta } from '../../../core/models/api-response.model';
 import { ToastService } from '../../../core/services/toast.service';
 
-/**
- * ProductListPage - Atomic Design Level 5 (Page/Smart Component)
- * Complete, routable page that fetches and displays products
- * 
- * Characteristics:
- * - Complete, functional page
- * - Data-aware (smart component)
- * - Service injection and HTTP calls
- * - State management (RxJS)
- * - Navigation logic
- * - Error handling and loading states
- * - 300-500 lines acceptable for complex pages
- */
 @Component({
   selector: 'app-product-list-page',
   standalone: true,
@@ -40,8 +27,8 @@ import { ToastService } from '../../../core/services/toast.service';
   ],
   template: `
     <app-list-layout 
-      [title]="'Products'"
-      [subtitle]="'Manage your product inventory'"
+      [title]="'Produtos'"
+      [subtitle]="'Gerencie seu estoque de produtos'"
       [showFilters]="true"
       [showPagination]="true">
       
@@ -50,7 +37,7 @@ import { ToastService } from '../../../core/services/toast.service';
         <app-button
           variant="primary"
           (clicked)="onCreateProduct()">
-          <span class="mr-2">+</span> Add Product
+          <span class="mr-2">+</span> Adicionar Produto
         </app-button>
       </div>
 
@@ -58,7 +45,7 @@ import { ToastService } from '../../../core/services/toast.service';
       <div slot="filters" class="space-y-4">
         <!-- Search Bar -->
         <app-search-bar
-          placeholder="Search products by name, description, or SKU..."
+          placeholder="Buscar produtos por nome, descrição ou SKU..."
           (search)="onSearch($event)" />
 
         <!-- Advanced Filters -->
@@ -81,14 +68,14 @@ import { ToastService } from '../../../core/services/toast.service';
                 d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" 
                 clip-rule="evenodd" />
             </svg>
-            <span class="font-semibold mr-2">Error:</span>
+            <span class="font-semibold mr-2">Erro:</span>
             <span>{{ error }}</span>
           </div>
         </div>
 
         <!-- Loading State -->
         <div *ngIf="loading$ | async" class="p-8">
-          <app-spinner message="Loading products..." />
+          <app-spinner message="Carregando produtos..." />
         </div>
 
         <!-- Products Table -->
@@ -106,9 +93,9 @@ import { ToastService } from '../../../core/services/toast.service';
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
               d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
           </svg>
-          <h3 class="mt-2 text-sm font-medium text-gray-900">No products found</h3>
+          <h3 class="mt-2 text-sm font-medium text-gray-900">Nenhum produto encontrado</h3>
           <p class="mt-1 text-sm text-gray-500">
-            Try adjusting your search or filters
+            Tente ajustar sua busca ou filtros
           </p>
         </div>
       </div>
@@ -121,13 +108,13 @@ import { ToastService } from '../../../core/services/toast.service';
         
         <!-- Results Info -->
         <div class="text-sm text-gray-700">
-          Showing 
+          Mostrando 
           <span class="font-medium">{{ ((paginationMeta.page - 1) * paginationMeta.limit) + 1 }}</span>
-          to 
+          até 
           <span class="font-medium">{{ Math.min(paginationMeta.page * paginationMeta.limit, paginationMeta.total) }}</span>
-          of 
+          de 
           <span class="font-medium">{{ paginationMeta.total }}</span>
-          products
+          produtos
         </div>
 
         <!-- Pagination Controls -->
@@ -140,11 +127,11 @@ import { ToastService } from '../../../core/services/toast.service';
             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
-            Previous
+            Anterior
           </app-button>
 
           <div class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg">
-            Page {{ paginationMeta.page }} of {{ paginationMeta.totalPages }}
+            Página {{ paginationMeta.page }} de {{ paginationMeta.totalPages }}
           </div>
 
           <app-button
@@ -152,7 +139,7 @@ import { ToastService } from '../../../core/services/toast.service';
             size="small"
             [disabled]="!paginationMeta.hasNextPage"
             (clicked)="onNextPage()">
-            Next
+            Próximo
             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>

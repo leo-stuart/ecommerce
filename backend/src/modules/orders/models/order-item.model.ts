@@ -26,7 +26,7 @@ export class OrderItem extends Model<OrderItem> {
     primaryKey: true,
     autoIncrement: true,
   })
-  id: number;
+  declare id: number;
 
   @ForeignKey(() => Order)
   @Column({
@@ -72,14 +72,14 @@ export class OrderItem extends Model<OrderItem> {
     type: DataType.DATE,
     allowNull: false,
   })
-  createdAt: Date;
+  declare createdAt: Date;
 
   @UpdatedAt
   @Column({
     type: DataType.DATE,
     allowNull: false,
   })
-  updatedAt: Date;
+  declare updatedAt: Date;
 
   // Relationships
   @BelongsTo(() => Order)

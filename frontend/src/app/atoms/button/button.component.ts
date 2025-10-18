@@ -1,17 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-/**
- * Button Atom - Atomic Design Level 1
- * Basic, reusable button component
- * 
- * Characteristics:
- * - Self-contained and independent
- * - Highly reusable (used everywhere)
- * - Simple (single UI element)
- * - Under 100 lines
- * - No HTTP calls or complex business logic
- */
 @Component({
   selector: 'app-button',
   standalone: true,
@@ -44,18 +33,18 @@ export class ButtonComponent {
   @Output() clicked = new EventEmitter<Event>();
 
   get buttonClasses(): string {
-    const baseClasses = 'btn inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+    const baseClasses = 'inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 active:scale-95';
     
     const variantClasses = {
-      primary: 'bg-primary text-white hover:bg-primary-600 focus:ring-primary',
-      secondary: 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 focus:ring-gray-500',
-      danger: 'bg-error text-white hover:bg-red-600 focus:ring-error'
+      primary: 'bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 focus:ring-blue-500 shadow-lg hover:shadow-xl',
+      secondary: 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-gray-400 focus:ring-gray-500 shadow-sm hover:shadow-md',
+      danger: 'bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 focus:ring-red-500 shadow-lg hover:shadow-xl'
     };
 
     const sizeClasses = {
-      small: 'px-3 py-1.5 text-sm rounded',
-      medium: 'px-4 py-2 text-base rounded-md',
-      large: 'px-6 py-3 text-lg rounded-lg'
+      small: 'px-3 py-1.5 text-sm rounded-lg',
+      medium: 'px-4 py-2 text-base rounded-lg',
+      large: 'px-6 py-3 text-lg rounded-xl'
     };
 
     const widthClass = this.fullWidth ? 'w-full' : '';
