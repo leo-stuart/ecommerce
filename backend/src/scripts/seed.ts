@@ -98,7 +98,7 @@ async function seed() {
         totalAmount: 4299.98,
         notes: 'Cliente preferencial - entrega rápida',
         isActive: true,
-      },
+      } as any,
       {
         customerName: 'Maria Santos',
         customerEmail: 'maria.santos@email.com',
@@ -106,7 +106,7 @@ async function seed() {
         totalAmount: 1799.98,
         notes: 'Pagamento via PIX',
         isActive: true,
-      },
+      } as any,
       {
         customerName: 'Pedro Oliveira',
         customerEmail: 'pedro.oliveira@email.com',
@@ -114,7 +114,7 @@ async function seed() {
         totalAmount: 1299.99,
         notes: 'Aguardando confirmação de pagamento',
         isActive: true,
-      },
+      } as any,
     ]);
 
     console.log(`✅ Created ${orders.length} orders`);
@@ -124,42 +124,42 @@ async function seed() {
     const orderItems = await OrderItem.bulkCreate([
       // Order 1: João Silva
       {
-        orderId: orders[0].id,
-        productId: products[0].id, // Samsung Galaxy S24
+        orderId: orders[0].id!,
+        productId: products[0].id!, // Samsung Galaxy S24
         quantity: 1,
         priceAtOrder: 2999.99,
         subtotal: 2999.99,
-      },
+      } as any,
       {
-        orderId: orders[0].id,
-        productId: products[2].id, // Sony WH-1000XM5
+        orderId: orders[0].id!,
+        productId: products[2].id!, // Sony WH-1000XM5
         quantity: 1,
         priceAtOrder: 1299.99,
         subtotal: 1299.99,
-      },
+      } as any,
       // Order 2: Maria Santos
       {
-        orderId: orders[1].id,
-        productId: products[1].id, // Dell Inspiron 15
+        orderId: orders[1].id!,
+        productId: products[1].id!, // Dell Inspiron 15
         quantity: 1,
         priceAtOrder: 2499.99,
         subtotal: 2499.99,
-      },
+      } as any,
       {
-        orderId: orders[1].id,
-        productId: products[5].id, // LG UltraWide
+        orderId: orders[1].id!,
+        productId: products[5].id!, // LG UltraWide
         quantity: 1,
         priceAtOrder: 899.99,
         subtotal: 899.99,
-      },
+      } as any,
       // Order 3: Pedro Oliveira
       {
-        orderId: orders[2].id,
-        productId: products[2].id, // Sony WH-1000XM5
+        orderId: orders[2].id!,
+        productId: products[2].id!, // Sony WH-1000XM5
         quantity: 1,
         priceAtOrder: 1299.99,
         subtotal: 1299.99,
-      },
+      } as any,
     ]);
 
     console.log(`✅ Created ${orderItems.length} order items`);
