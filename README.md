@@ -12,8 +12,26 @@ Aplicação CRUD full-stack demonstrando arquitetura limpa, melhores práticas e
 
 ---
 
+## 🌐 Deploy em Produção (Railway)
+
+### URLs Live
+
+- 🎨 **Frontend:** https://teste-zoppy-frontend-production.up.railway.app
+- 🔧 **Backend API:** https://teste-zoppy-production.up.railway.app/api
+- 📚 **Documentação Swagger:** https://teste-zoppy-production.up.railway.app/api/docs
+
+### Status do Deploy
+- ✅ **Frontend:** Deployado e funcionando
+- ✅ **Backend:** Deployado e funcionando  
+- ✅ **Banco de Dados:** PostgreSQL (Railway)
+- ✅ **CORS:** Configurado para permitir frontend
+- ✅ **HTTPS:** Certificados SSL automáticos
+
+---
+
 ## 📋 Índice
 
+- [Deploy em Produção](#-deploy-em-produção-railway)
 - [Funcionalidades](#-funcionalidades)
 - [Stack Tecnológica](#️-stack-tecnológica)
 - [Arquitetura](#️-arquitetura)
@@ -624,52 +642,6 @@ npm run lint         # Executar ESLint
 
 ---
 
-## 🚀 Deploy em Produção
-
-### Opção 1: Docker Compose (Recomendado)
-
-```bash
-# Build e iniciar
-docker-compose -f docker-compose.prod.yml up -d
-
-# Ver logs
-docker-compose logs -f backend
-docker-compose logs -f frontend
-
-# Parar
-docker-compose down
-```
-
-### Opção 2: Render.com (Grátis)
-
-Ver guia completo em `DEPLOYMENT-GUIDE.md`
-
-**Passos rápidos:**
-1. Push para GitHub
-2. Criar banco PostgreSQL no Render
-3. Criar Web Service (backend)
-4. Criar Static Site (frontend)
-5. Configurar variáveis de ambiente
-
-### Opção 3: VPS (DigitalOcean, AWS, etc)
-
-```bash
-# SSH no servidor
-ssh user@seu-servidor
-
-# Clonar repositório
-git clone https://github.com/seu-usuario/teste-zoppy.git
-cd teste-zoppy
-
-# Configurar .env
-cp backend/.env.example backend/.env
-# Editar com suas configurações
-
-# Build e iniciar com Docker
-docker-compose -f docker-compose.prod.yml up -d
-```
-
----
 
 ## 📊 Estatísticas do Projeto
 
