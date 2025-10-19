@@ -9,7 +9,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: zoppy-frontend-prod
+    container_name: ecommerce-frontend-prod
     restart: unless-stopped
     ports:
       - "80:8080"
@@ -18,9 +18,9 @@ services:
       NODE_ENV: production
       
       # CORS (if needed for API calls)
-      API_URL: ${API_URL:-https://teste-zoppy-production.up.railway.app/api}
+      API_URL: ${API_URL:-https://ecommerce-crud-production.up.railway.app/api}
     networks:
-      - zoppy-network
+      - ecommerce-network
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
       interval: 30s
@@ -29,5 +29,5 @@ services:
       start_period: 40s
 
 networks:
-  zoppy-network:
+  ecommerce-network:
     driver: bridge

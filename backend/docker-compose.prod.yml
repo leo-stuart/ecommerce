@@ -9,7 +9,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: zoppy-backend-prod
+    container_name: ecommerce-backend-prod
     restart: unless-stopped
     ports:
       - "3000:3000"
@@ -27,7 +27,7 @@ services:
       # CORS
       CORS_ORIGIN: ${CORS_ORIGIN:-https://your-frontend-domain.com}
     networks:
-      - zoppy-network
+      - ecommerce-network
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
       interval: 30s
@@ -41,7 +41,7 @@ services:
   # Optional: Nginx reverse proxy
   # nginx:
   #   image: nginx:alpine
-  #   container_name: zoppy-nginx
+  #   container_name: ecommerce-nginx
   #   restart: unless-stopped
   #   ports:
   #     - "80:80"
@@ -52,10 +52,10 @@ services:
   #   depends_on:
   #     - backend
   #   networks:
-  #     - zoppy-network
+  #     - ecommerce-network
 
 networks:
-  zoppy-network:
+  ecommerce-network:
     driver: bridge
 
 # No volumes needed - using external Railway Postgres

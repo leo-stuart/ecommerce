@@ -9,5 +9,5 @@ import { NavigationHeaderComponent } from './organisms/navigation-header/navigat
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('Teste Zoppy');
+  protected readonly title = signal('E-commerce CRUD');
 }

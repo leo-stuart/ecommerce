@@ -1,5 +1,5 @@
 # ======================================
-# Zoppy Frontend - Production Dockerfile
+# E-commerce Frontend - Production Dockerfile
 # ======================================
 # Multi-stage build for optimized production image
 # Based on Node.js 20 Alpine (lightweight)

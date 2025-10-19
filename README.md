@@ -1,4 +1,4 @@
-# 🛒 Sistema de Gerenciamento Zoppy
+# 🛒 Sistema de Gerenciamento E-commerce
 
 > Aplicação CRUD full-stack moderna construída com NestJS, Angular 19 e MySQL
 
@@ -745,13 +745,13 @@ Seguimos [Conventional Commits](https://www.conventionalcommits.org/):
 
 ## 📄 Licença
 
-Este projeto foi desenvolvido como parte do desafio técnico para a posição de Desenvolvedor Junior na Zoppy.
+Este projeto foi desenvolvido como uma aplicação de demonstração de habilidades técnicas em desenvolvimento full-stack.
 
 ---
 
 ## 🙏 Agradecimentos
 
-- **Zoppy** pela oportunidade do desafio técnico
+- **Comunidade Open Source** pela inspiração e recursos
 - **NestJS** pela excelente documentação
 - **Angular** pelo framework robusto
 - **Comunidade Open Source** pelas ferramentas incríveis
@@ -761,7 +761,7 @@ Este projeto foi desenvolvido como parte do desafio técnico para a posição de
 ## 📞 Contato
 
 **Desenvolvedor:** Leo Stuart  
-**Projeto:** Desafio Técnico Zoppy  
+**Projeto:** E-commerce CRUD System  
 **Data:** Outubro 2025
 
 ---
@@ -783,4 +783,4 @@ Este projeto foi desenvolvido como parte do desafio técnico para a posição de
 
 **⭐ Se este projeto foi útil, considere dar uma estrela!**
 
-**Feito com ❤️ para o desafio técnico Zoppy**
+**Feito com ❤️ para demonstrar habilidades em desenvolvimento full-stack**

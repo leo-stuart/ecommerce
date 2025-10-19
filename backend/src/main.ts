@@ -44,14 +44,14 @@ async function bootstrap() {
 
   // Swagger/OpenAPI Documentation
   const config = new DocumentBuilder()
-    .setTitle('Zoppy CRUD API')
+    .setTitle('E-commerce CRUD API')
     .setDescription(
-      'RESTful API for managing products and orders in the Zoppy e-commerce system. ' +
+      'RESTful API for managing products and orders in an e-commerce system. ' +
       'Built with NestJS following MVC architecture and best practices. ' +
       'Features include pagination, filtering, validation, and comprehensive error handling.',
     )
     .setVersion('1.0')
-    .setContact('Zoppy Team', 'https://zoppy.com', 'dev@zoppy.com')
+    .setContact('Development Team', 'https://github.com', 'dev@example.com')
     .setLicense('MIT', 'https://opensource.org/licenses/MIT')
     .addTag('products', 'Product management endpoints - CRUD operations for products')
     .addTag('orders', 'Order management endpoints - CRUD operations for orders with items')
@@ -61,7 +61,7 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document, {
-    customSiteTitle: 'Zoppy API Documentation',
+    customSiteTitle: 'E-commerce API Documentation',
     customCss: '.swagger-ui .topbar { display: none }',
     swaggerOptions: {
       persistAuthorization: true,
