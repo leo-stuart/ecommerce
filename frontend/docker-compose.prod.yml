@@ -18,7 +18,7 @@ services:
       NODE_ENV: production
       
       # CORS (if needed for API calls)
-      API_URL: ${API_URL:-https://ecommerce-crud-production.up.railway.app/api}
+      API_URL: ${API_URL:-https://leo-ecommerce-backend-production.up.railway.app/api}
     networks:
       - ecommerce-network
     healthcheck:

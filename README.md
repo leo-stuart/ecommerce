@@ -16,9 +16,9 @@ Aplicação CRUD full-stack demonstrando arquitetura limpa, melhores práticas e
 
 ### URLs Live
 
-- 🎨 **Frontend:** https://teste-zoppy-frontend-production.up.railway.app
-- 🔧 **Backend API:** https://teste-zoppy-production.up.railway.app/api
-- 📚 **Documentação Swagger:** https://teste-zoppy-production.up.railway.app/api/docs
+- 🎨 **Frontend:** https://leo-ecommerce-frontend-production.up.railway.app
+- 🔧 **Backend API:** https://leo-ecommerce-backend-production.up.railway.app/api
+- 📚 **Documentação Swagger:** https://leo-ecommerce-backend-production.up.railway.app/api/docs
 
 ### Status do Deploy
 - ✅ **Frontend:** Deployado e funcionando

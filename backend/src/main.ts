@@ -18,8 +18,8 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       configService.get<string>('CORS_ORIGIN') || 'http://localhost:4200',
-      'https://teste-zoppy-frontend-production.up.railway.app',
-      'https://teste-zoppy-production.up.railway.app'
+      'https://leo-ecommerce-frontend-production.up.railway.app',
+      'https://leo-ecommerce-backend-production.up.railway.app'
     ],
     credentials: true,
   });
