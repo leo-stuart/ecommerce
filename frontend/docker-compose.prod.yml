@@ -1,0 +1,33 @@
+# Production Docker Compose Configuration for Frontend
+# This file shows how to run the frontend in production with Docker
+
+version: '3.8'
+
+services:
+  # Frontend Application
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: zoppy-frontend-prod
+    restart: unless-stopped
+    ports:
+      - "80:8080"
+    environment:
+      # Application
+      NODE_ENV: production
+      
+      # CORS (if needed for API calls)
+      API_URL: ${API_URL:-https://teste-zoppy-production.up.railway.app/api}
+    networks:
+      - zoppy-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  zoppy-network:
+    driver: bridge
